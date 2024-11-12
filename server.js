@@ -10,11 +10,11 @@ app.use(express.json());
 const connections = {};
 const models = {};
 
-const bankUserSchema = new mongoose.Schema({});
+// const bankUserSchema = new mongoose.Schema({});
 
 const getConnection = async (dbName) => {
     console.log(getConnection(`${dbName}`));
-    if (connections[dbName] !== dbName) {
+    if (!connections[dbName]) {
         connections[dbName] = await mongoose.createConnection(process.env.MONGO_URI, {
             dbName: dbName,
         });
@@ -42,7 +42,7 @@ const getModel = async (dbName, collectionName) => {
     return models[modelKey];
 };
 
-app.get('/find', async (req, res) => {
+app.get('/find/:database/:collection', async (req, res) => {
     try {
         const { database, collection } = req.params;
         const Model = await getModel(database, collection);
