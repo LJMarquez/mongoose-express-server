@@ -13,7 +13,7 @@ const models = {};
 // const bankUserSchema = new mongoose.Schema({});
 
 const getConnection = async (dbName) => {
-    console.log(getConnection(`${dbName}`));
+    console.log(`getConnection called with ${dbName}`);
     if (!connections[dbName]) {
         connections[dbName] = await mongoose.createConnection(process.env.MONGO_URI, {
             dbName: dbName,
